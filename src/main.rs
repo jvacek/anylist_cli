@@ -3,14 +3,15 @@ mod commands;
 extern crate clap;
 
 use clap::Command;
-use commands::{list, login};
+use commands::{list, login, recipes};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut commands = Command::new("anylist")
         .about("See, update, and add to your AnyList lists.")
         .subcommand(login::command())
-        .subcommand(list::command());
+        .subcommand(list::command())
+        .subcommand(recipes::command());
     let matches = commands.clone().get_matches();
 
     match matches.subcommand() {
@@ -19,6 +20,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         Some(("list", matches)) => {
             list::exec_command(matches).await?;
+        }
+        Some(("recipes", matches)) => {
+            recipes::exec_command(matches).await?;
         }
         _ => {
             commands.print_help()?;
