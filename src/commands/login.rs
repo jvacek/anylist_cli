@@ -5,7 +5,7 @@ use clap::{ArgMatches, Command, SubCommand};
 use inquire::{Password, Text};
 
 pub fn command() -> Command<'static> {
-    return SubCommand::with_name("login")
+    return SubCommand::with_name("login");
 }
 
 pub async fn exec_command(_matches: &ArgMatches) -> Result<(), Box<dyn std::error::Error>> {
